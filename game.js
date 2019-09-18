@@ -1,4 +1,5 @@
 var score = 0;
+var item = 0;
 
 postToPage(score);
 
@@ -8,9 +9,7 @@ createButton('Button', btn3Press);
 createButton('Button', btn4Press);
 changeTitle('Clicker Game');
 
-setInterval(btnPress, 1000);
 
-score--;
 
 function btnPress() {
   score++;
@@ -22,11 +21,15 @@ function btn2Press() {
   postToPage(score);
 }
 
-if (score > 50){
-  function btn3Press() {
-    score++;
+function btn3Press() {
+  if (score > 49){
+    score = score - 50
+    score++;  
+    item = 5
     postToPage(score);
   }
-  
 }
 
+if (item = 5){
+   score++;
+}
