@@ -1,7 +1,9 @@
 var score = 0;
 var item = 0;
 
-postToPage(score);
+var title = new Title('Welcome to the Game'); // Create a title element
+var button = new Button('hello', btnPress);   // Create a button element
+var scr = new Text(score);                    // Create a text element
 
 createButton('Button', btnPress);
 createButton('Button', btn2Press);
@@ -12,8 +14,8 @@ changeTitle('Clicker Game');
 
 
 function btnPress() {
-  score++;
-  postToPage(score);
+  score++;         // Increase the score
+  scr.edit(score); // Update the page with the new score
 }
 
 function btn2Press() {
