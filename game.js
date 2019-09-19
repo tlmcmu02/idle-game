@@ -6,7 +6,7 @@ var button = new Button('+1', btnPress);   // Create a button element
 var button2 = new Button('-1', btn2Press);
 var button3 = new Button('+1CPS', btn3Press);
 var scr = new Text(score);                    // Create a text element
-
+var scr2 = new Text(score2);   
 
 changeTitle('Clicker Game');
 
