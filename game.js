@@ -11,6 +11,8 @@ var scr2 = new Text(score2);
 changeTitle('Clicker Game');
 
 
+button3.hide();
+
 
 
 function btnPress() {
@@ -30,10 +32,8 @@ function check(){
   if (score > 9){
     button3.show();
   }
-  if (score < 10) {
-    button3.hide();
-  }
 }
+
 function btn3Press() {
   if (score > 10){
     score = score - 10 
