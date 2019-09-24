@@ -6,6 +6,9 @@ var diamond = 0;
 var craft = 0;
 var stick = 0;
 var explore = 0;
+var biome = 0;
+
+var biome = ['mush', 'jung', 'village', 'ocean'];
 
 var title = new Title('Welcome to the Game'); // Create a title element
 
@@ -17,7 +20,7 @@ var gatherdiamond = new Button('Diamond', btn5Press);
 var woodfarm = new Button('Wood Farm', btnPress);
 var makecraft = new Button('Workbench', btn6Press);
 var makestick = new Button('Stick', btn7Press);
-var explorebutton = new Button('Explore', btn7Press);
+var explorebutton = new Button('Explore', btn8Press);
 
 var crft = new Text(craft);  
 var wd = new Text(wood);                    // Create a text element
@@ -38,6 +41,11 @@ makestick.hide();
 function btn1Press() {
   wood++;         // Increase the score
   wd.edit(wood); // Update the page with the new score
+}
+
+function btn8Press() {
+  random(biome);        
+  dmnd.edit(diamond); // Update the page with the new score
 }
 
 function btn7Press() {
