@@ -44,7 +44,8 @@ function btn1Press() {
 }
 
 function btn8Press() {
-  biomevar = random(biome);        
+  let index = random(0, 4);
+  biomevar = biome[index];        
   dmnd.edit(diamond); // Update the page with the new score
 }
 
