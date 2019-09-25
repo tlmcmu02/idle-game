@@ -6,29 +6,39 @@ var diamond = 0;
 var craft = 0;
 var stick = 0;
 var explore = 0;
-var biome = 0;
+//var biome = 0;
+var pickaxedurability = 0;
+var stonepickaxe = 0;
+var ironpickaxe = 0;
 
-var biome = ['mush', 'jung', 'village', 'ocean'];
+//var biome = ['mush', 'jung', 'village', 'ocean'];
 
 var title = new Title('Welcome to the Game'); // Create a title element
 
 var gatherwood = new Button('Wood', btn1Press);   // Create a button element
+var makestick = new Button('Stick', btn7Press);
+var pickaxe = new Button('Pickaxe', btn9Press);
 var gatherstone = new Button('Stone', btn2Press);
 var gatheriron = new Button('Iron', btn3Press);
 var gatherredstone = new Button('Copper',btn4Press);
 var gatherdiamond = new Button('Diamond', btn5Press);
 var woodfarm = new Button('Wood Farm', btnPress);
 var makecraft = new Button('Workbench', btn6Press);
-var makestick = new Button('Stick', btn7Press);
-var explorebutton = new Button('Explore', btn8Press);
+var stonepick = new Button('Upgrade Pickaxe To Stone', btn10Press)
+var ironpick = new Button('Upgrade Pickaxe To Iron', btn11Press)
+//var explorebutton = new Button('Explore', btn8Press);
 
 var crft = new Text(craft);  
-var wd = new Text(wood);                    // Create a text element
-var stck = new Text(stick);
-var stn = new Text(stone); 
-var irn = new Text(iron);  
-var rdstn = new Text(redstone); 
-var dmnd = new Text(diamond); 
+var pck = new Text('Durability ' + pickaxedurability);
+var stnpck = new Text(stonepickaxe);
+var irnpck = new Text(ironpickaxe);
+var wd = new Text('Wood ' + wood);                    // Create a text element
+var stck = new Text('Stick ' + stick);
+var stn = new Text('Stone ' + stone); 
+var irn = new Text('Iron ' + iron);  
+var rdstn = new Text('Copper ' + redstone); 
+var dmnd = new Text('Diamond ' + diamond); 
+
 
 gatherstone.hide();
 gatheriron.hide();
@@ -37,37 +47,92 @@ gatherdiamond.hide();
 woodfarm.hide();
 makecraft.hide();
 makestick.hide();
+pickaxe.hide();
+stonepick.hide();
+ironpick.hide();
 
 function btn1Press() {
   wood++;         // Increase the score
-  wd.edit(wood); // Update the page with the new score
+  wd.edit('Wood ' + wood); // Update the page with the new score
 }
 
-function btn8Press() {
-  let index = random(0, 4);
-  biomevar = biome[index];        
-  dmnd.edit(diamond); // Update the page with the new score
+function btn11Press() {
+  if (iron > 2) {
+    if (stick > 1) {
+      ironpickaxe = 1
+      iron = iron - 3
+      stick = stick - 2
+      irn.edit('Iron ' + iron);
+      stck.edit('Stick ' + stick);
+    }
+  }
 }
+
+function btn10Press() {
+  if (stone > 2) {
+    if (stick > 1) {
+      stonepickaxe = 1
+      stone = stone - 3
+      stick = stick - 2
+      stn.edit('Stone ' + stone);
+      stck.edit('Stick ' + stick);
+    }
+  }
+}
+//function btn8Press() {
+  //let index = random(0, 4);
+  //biomevar = biome[index];        
+  //dmnd.edit(diamond); 
+//}
 
 function btn7Press() {
+  if (wood > 1){
   stick++;         // Increase the score
-  stck.edit(stick); // Update the page with the new score
+  stck.edit('Stick ' + stick); // Update the page with the new score
+  wood = wood - 2
+  wd.edit('Wood ' + wood);
+  }
 }
 
+function btn9Press() {
+  if (wood > 2){
+    if (stick > 1){
+      pickaxedurability = pickaxedurability + 50
+      pck.edit('Durability ' + pickaxedurability);
+      wood = wood - 3
+      stick = stick - 2
+      stck.edit('Stick ' + stick);
+      wd.edit('Wood ' + wood);
+    }
+  }
+}
 
 function btn6Press() {
+  if (wood > 3){
   craft++;         // Increase the score
-  crft.edit(craft); // Update the page with the new score
+  wood = wood - 4
+  wd.edit('Wood ' + wood);
+  }
 }
 
 function btn2Press() {
+  if (pickaxedurability > 0){
   stone++;         // Increase the score
-  stn.edit(stone); // Update the page with the new score
+  stn.edit('Stone ' + stone); // Update the page with the new score
+  pickaxedurability--;
+  pck.edit('Durability ' + pickaxedurability);
+  }
 }
 
 function btn3Press() {
-  iron++;         // Increase the score
-  irn.edit(iron); // Update the page with the new score
+  if (stonepickaxe > 0){
+    if (pickaxedurability > 0){
+      iron++;         // Increase the score
+      irn.edit('Iron ' + iron); // Update the page with the new score
+      pickaxedurability--;
+      pck.edit('Durability ' + pickaxedurability);
+    }
+  }
 }
 
 function btn4Press() {
@@ -86,27 +151,60 @@ setInterval(checkcrft, 100);
 setInterval(checkstn, 100);
 setInterval(checkirn, 100);
 setInterval(checkrdstn, 100);
+setInterval(checkpick, 100);
+setInterval(checkstnpick, 100);
+setInterval(checkirnpick, 100);
 
 function checkstck(){
-  if (wood > 2){
+  if (wood > 1){
     makestick.show();
   }
 }
 
+function checkpick(){
+  if (wood > 2){
+    if (stick > 1){
+      if(craft > 0){
+        pickaxe.show();
+      }
+    }
+  }
+}
+
+function checkstnpick(){
+  if (stone > 2){
+    if (stick > 1){
+      if(craft > 0){
+        stonepick.show();
+      }
+    }
+  }
+}
+
+function checkirnpick(){
+  if (iron > 2){
+    if (stick > 1){
+      if(craft > 0){
+        ironpick.show();
+      }
+    }
+  }
+}
+
 function checkwd(){
-  if (wood > 4){
+  if (wood > 3){
     makecraft.show();
   }
 }
 
 function checkcrft(){
-  if (craft > 0){
+  if (pickaxedurability > 0){
     gatherstone.show();
   }
 }
 
 function checkstn(){
-  if (stone > 50){
+  if (stonepickaxe > 0){
     gatheriron.show();
   }
 }
@@ -128,7 +226,7 @@ function btnPress() {
   if (redstone > 49) {
   redstone = redstone - 50 
     setInterval(btn1Press, 1000);
-    wd.edit(wood);
+    wd.edit('Wood ' + wood);
     rdstn.edit(redstone);
   }
 }
