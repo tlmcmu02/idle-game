@@ -7,9 +7,10 @@ var craft = 0;
 var stick = 0;
 var explore = 0;
 //var biome = 0;
-var pickaxedurability = 0;
+var pickaxedurability = -1;
 var stonepickaxe = 0;
 var ironpickaxe = 0;
+var diamondpickaxe = 0;
 
 //var biome = ['mush', 'jung', 'village', 'ocean'];
 
@@ -26,12 +27,14 @@ var woodfarm = new Button('Wood Farm', btnPress);
 var makecraft = new Button('Workbench', btn6Press);
 var stonepick = new Button('Upgrade Pickaxe To Stone', btn10Press)
 var ironpick = new Button('Upgrade Pickaxe To Iron', btn11Press)
+var diamondpick = new Button('Upgrade Pickaxe To Diamond', btn12Press);
 //var explorebutton = new Button('Explore', btn8Press);
 
 var crft = new Text(craft);  
 var pck = new Text('Durability ' + pickaxedurability);
 var stnpck = new Text(stonepickaxe);
 var irnpck = new Text(ironpickaxe);
+var dmndpck = new Text(diamondpickaxe);
 var wd = new Text('Wood ' + wood);                    // Create a text element
 var stck = new Text('Stick ' + stick);
 var stn = new Text('Stone ' + stone); 
@@ -50,10 +53,25 @@ makestick.hide();
 pickaxe.hide();
 stonepick.hide();
 ironpick.hide();
+diamondpick.hide();
 
 function btn1Press() {
   wood++;         // Increase the score
   wd.edit('Wood ' + wood); // Update the page with the new score
+}
+
+function btn12Press() {
+  if (diamond > 2) {
+    if (stick > 1) {
+      diamondpickaxe = 1
+      diamond = diamond - 3
+      stick = stick - 2
+      dmnd.edit('Diamond ' + diamond);
+      stck.edit('Stick ' + stick);
+      pickaxedurability = pickaxedurability + 100
+      pck.edit('Durability ' + pickaxedurability);
+    }
+  }
 }
 
 function btn11Press() {
@@ -64,6 +82,8 @@ function btn11Press() {
       stick = stick - 2
       irn.edit('Iron ' + iron);
       stck.edit('Stick ' + stick);
+      pickaxedurability = pickaxedurability + 50
+      pck.edit('Durability ' + pickaxedurability);
     }
   }
 }
@@ -76,6 +96,8 @@ function btn10Press() {
       stick = stick - 2
       stn.edit('Stone ' + stone);
       stck.edit('Stick ' + stick);
+      pickaxedurability = pickaxedurability + 20
+      pck.edit('Durability ' + pickaxedurability);
     }
   }
 }
@@ -97,7 +119,7 @@ function btn7Press() {
 function btn9Press() {
   if (wood > 2){
     if (stick > 1){
-      pickaxedurability = pickaxedurability + 50
+      pickaxedurability = pickaxedurability + 10
       pck.edit('Durability ' + pickaxedurability);
       wood = wood - 3
       stick = stick - 2
@@ -136,13 +158,25 @@ function btn3Press() {
 }
 
 function btn4Press() {
-  redstone++;         // Increase the score
-  rdstn.edit(redstone); // Update the page with the new score
+  if (ironpickaxe > 0) {
+    if (pickaxedurability > 0) {
+      redstone++;         // Increase the score
+      rdstn.edit('Copper ' + redstone); // Update the page with the new score
+      pickaxedurability--;
+      pck.edit('Durability ' + pickaxedurability);
+    }
+  }
 }
 
 function btn5Press() {
-  diamond++;         // Increase the score
-  dmnd.edit(diamond); // Update the page with the new score
+  if (ironpickaxe > 0) {
+    if (pickaxedurability > 0) {
+      diamond++;         // Increase the score
+      dmnd.edit('Diamond ' + diamond); // Update the page with the new score
+      pickaxedurability--;
+      pck.edit('Durability ' + pickaxedurability);
+    }
+  }
 }
 
 setInterval(checkstck, 100);
@@ -154,6 +188,9 @@ setInterval(checkrdstn, 100);
 setInterval(checkpick, 100);
 setInterval(checkstnpick, 100);
 setInterval(checkirnpick, 100);
+setInterval(checkdmndpick, 100);
+setInterval(check69, 1)
+setInterval(checkLose, 1);
 
 function checkstck(){
   if (wood > 1){
@@ -191,6 +228,16 @@ function checkirnpick(){
   }
 }
 
+function checkdmndpick(){
+  if (diamond > 2){
+    if (stick > 1){
+      if(craft > 0){
+        diamondpick.show();
+      }
+    }
+  }
+}
+
 function checkwd(){
   if (wood > 3){
     makecraft.show();
@@ -210,7 +257,7 @@ function checkstn(){
 }
 
 function checkirn(){
-  if (iron > 50){
+  if (ironpickaxe > 0){
     gatherredstone.show();
     gatherdiamond.show();
   }
@@ -228,5 +275,38 @@ function btnPress() {
     setInterval(btn1Press, 1000);
     wd.edit('Wood ' + wood);
     rdstn.edit(redstone);
+  }
+}
+
+function checkLose(){
+  if (pickaxedurability == 0) {
+   wd.edit('You Lost');
+    stn.edit('You Lost');
+   irn.edit('You Lost');
+     rdstn.edit('You Lost');
+   dmnd.edit('You Lost');
+   stck.edit('You Lost');
+   btn80Press();
+  }
+}
+
+function check69(){
+  if (wood == 69){
+    if (stone == 69){
+     if (iron == 69){
+        if (redstone == 69){
+          if (diamond == 69){
+            if (stick == 69){
+              wd.edit('nice.');
+              stn.edit('nice.');
+              irn.edit('nice.');
+              rdstn.edit('nice.');
+              dmnd.edit('nice.');
+              stck.edit('nice.');
+              }
+          }
+        }
+      }
+    }
   }
 }
