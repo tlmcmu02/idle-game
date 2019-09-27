@@ -11,6 +11,7 @@ var pickaxedurability = -1;
 var stonepickaxe = 0;
 var ironpickaxe = 0;
 var diamondpickaxe = 0;
+var woodfarm = 0;
 
 //var biome = ['mush', 'jung', 'village', 'ocean'];
 
@@ -101,10 +102,11 @@ function btn10Press() {
     }
   }
 }
+
 //function btn8Press() {
   //let index = random(0, 4);
   //biomevar = biome[index];        
-  //dmnd.edit(diamond); 
+  //.edit(); 
 //}
 
 function btn7Press() {
@@ -191,6 +193,7 @@ setInterval(checkirnpick, 100);
 setInterval(checkdmndpick, 100);
 setInterval(check69, 1)
 setInterval(checkLose, 1);
+setInterval(checkwoodfarm, 100);
 
 function checkstck(){
   if (wood > 1){
@@ -271,22 +274,31 @@ function checkrdstn(){
 
 function btnPress() {
   if (redstone > 49) {
-  redstone = redstone - 50 
-    setInterval(btn1Press, 1000);
+    redstone = redstone - 50 
+    woodfarm = 1;
     wd.edit('Wood ' + wood);
-    rdstn.edit(redstone);
+    rdstn.edit('Copper ' + redstone);
   }
 }
 
 function checkLose(){
   if (pickaxedurability == 0) {
    wd.edit('You Lost');
-    stn.edit('You Lost');
+   stn.edit('You Lost');
    irn.edit('You Lost');
-     rdstn.edit('You Lost');
+   rdstn.edit('You Lost');
    dmnd.edit('You Lost');
    stck.edit('You Lost');
-   btn80Press();
+   btn80Press();  //Causes the game to stop
+  }
+}
+
+function checkwoodfarm(){
+  if (woodfarm > 0) {
+   setInterval(btn1Press, 1000);
+  }
+  if (woodfarm == 0) {
+   clearInterval(btn1Press, 1000);
   }
 }
 
@@ -303,7 +315,9 @@ function check69(){
               rdstn.edit('nice.');
               dmnd.edit('nice.');
               stck.edit('nice.');
-              }
+              woodfarm = 0;
+              btn80Press(); //Causes the game to stop
+            }
           }
         }
       }
